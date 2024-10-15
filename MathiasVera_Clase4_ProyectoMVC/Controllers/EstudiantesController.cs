@@ -65,8 +65,10 @@ namespace MathiasVera_Clase4_ProyectoMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarrera"] = new SelectList(_context.Set<Carrera>(), "Id", "Id", estudiante.IdCarrera);
-            return View(estudiante);
+            _context.Add(estudiante);
+            await _context.SaveChangesAsync();
+            ViewData["IdCarrera"] = new SelectList(_context.Set<Carrera>(), "Id", "Nombre", estudiante.IdCarrera);
+            return RedirectToAction(nameof(Index), View(estudiante));
         }
 
         // GET: Estudiantes/Edit/5
